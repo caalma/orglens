@@ -175,12 +175,12 @@ OrgLens incluye un instalador en Bash que simplifica la configuración inicial. 
 #### Uso del instalador
 1. Haz el script ejecutable:
    ```bash
-   chmod +x install-orglens.sh
+   chmod +x install.sh
    ```
 
 2. Ejecuta el instalador:
    ```bash
-   ./install-orglens.sh
+   ./install.sh
    ```
 
 3. Recarga tu shell para aplicar los cambios:
