@@ -148,6 +148,108 @@ orglens -s "tipografia" -f md -o resultado.md -i test.zip
 - **Modo interactivo**: Ideal para realizar búsquedas repetidas sin reiniciar la herramienta.
 - **Optimización de rendimiento**: Procesa archivos grandes y múltiples archivos de manera eficiente.
 
+
+---
+
+## Utilidades complementarias
+
+
+### Autocompletado para Bash
+
+OrgLens incluye soporte para autocompletado en la terminal Bash. Esto permite sugerir opciones, formatos de salida y archivos `.org` mientras usas el comando `orglens-direct`.
+
+#### Instalación del autocompletado
+Para habilitar el autocompletado, asegúrate de que el archivo `orglens-completion.bash` esté en tu sistema y ejecuta el siguiente comando:
+
+```bash
+source /ruta/al/archivo/orglens-completion.bash
+```
+
+También puedes agregar esta línea a tu archivo `~/.bashrc` para que el autocompletado esté disponible automáticamente en todas tus sesiones:
+
+```bash
+echo "source /ruta/al/archivo/orglens-completion.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+#### Funcionalidades del autocompletado
+- Sugerencias para opciones como `-s`, `-n`, `-f`, `-o`, `-i`, etc.
+- Completado automático de formatos de salida (`json`, `txt`, `org`, `md`, `csv`, `html`).
+- Completado automático de archivos `.org` y patrones como `*.org`.
+
+
+
+### Instalador en Bash
+
+OrgLens incluye un instalador en Bash que simplifica la configuración inicial. Este instalador realiza las siguientes tareas:
+- Configura el autocompletado para Bash.
+- Crea enlaces simbólicos para `orglens-direct` y `orglens-interactive` en el directorio `~/.local/bin/`.
+
+#### Uso del instalador
+1. Haz el script ejecutable:
+   ```bash
+   chmod +x install-orglens.sh
+   ```
+
+2. Ejecuta el instalador:
+   ```bash
+   ./install-orglens.sh
+   ```
+
+3. Recarga tu shell para aplicar los cambios:
+   ```bash
+   source ~/.bashrc
+   ```
+
+#### Qué hace el instalador
+- Agrega el autocompletado al archivo `~/.bashrc`.
+- Crea enlaces simbólicos para los scripts principales:
+  - `orglens-direct` → `~/.local/bin/orglens-direct`
+  - `orglens-interactive` → `~/.local/bin/orglens-interactive`
+
+Con el instalador, tendrás acceso rápido a OrgLens desde cualquier ubicación en tu terminal.
+
+
+
+### Módulo para Emacs
+
+OrgLens incluye un módulo para Emacs que permite interactuar con `orglens-direct` directamente desde el editor. Este módulo facilita la ejecución de búsquedas y la visualización de resultados en un buffer dedicado.
+
+#### Instalación del módulo
+1. Guarda el archivo `orglens.el` en tu directorio de configuración de Emacs (por ejemplo, `~/.emacs.d/lisp/`).
+
+2. Añade las siguientes líneas a tu archivo de configuración de Emacs (`~/.emacs` o `~/.emacs.d/init.el`):
+   ```elisp
+   (add-to-list 'load-path "~/.emacs.d/lisp/")
+   (require 'orglens)
+   ```
+
+3. Reinicia Emacs o evalúa el archivo de configuración:
+   ```elisp
+   M-x eval-buffer
+   ```
+
+#### Uso del módulo
+- Ejecuta el comando interactivo:
+  ```elisp
+  M-x orglens-search
+  ```
+
+- Ingresa los parámetros solicitados:
+  - Términos a buscar (`si`).
+  - Términos a excluir (`no`) (opcional).
+  - Formato de salida (`txt`, `json`, `org`, etc.).
+  - Archivos/patrones de entrada (por ejemplo, `*.org test/*.org`).
+
+Los resultados se mostrarán en un buffer llamado `*OrgLens Results*`.
+
+#### Características del módulo
+- Soporte para múltiples archivos o patrones de entrada.
+- Interpretación de rutas relativas al directorio actual.
+- Visualización de resultados en un buffer de solo lectura.
+
+
+
 ---
 
 ## Contribuciones
