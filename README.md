@@ -5,7 +5,7 @@ OrgLens es una herramienta de línea de comandos diseñada para analizar, buscar
 Con OrgLens, puedes:
 - Buscar términos específicos dentro de archivos `.org`.
 - Filtrar secciones basadas en criterios positivos (`si`) y negativos (`no`).
-- Exportar los resultados en múltiples formatos: `JSON`, `TXT`, `ORG`, `Markdown` y `CSV`.
+- Exportar los resultados en múltiples formatos: `JSON`, `TXT`, `ORG`, `Markdown`, `HTML` y `CSV`.
 - Procesar archivos comprimidos (`.zip`, `.tar.gz`) automáticamente.
 - Usar un modo interactivo para realizar búsquedas repetidas sin reiniciar la herramienta.
 
@@ -27,7 +27,7 @@ Con OrgLens, puedes:
 
 ## Requisitos
 
-- Python 3.6 o superior.
+- Python 3.8 o superior.
 - Las siguientes bibliotecas de Python (se instalan automáticamente si usas `pip`):
   - `argparse`
   - `json`
@@ -40,7 +40,7 @@ Con OrgLens, puedes:
 
 ## Instalación
 
-### Desde el repositorio
+### Descarga repositorio
 
 1. Clona el repositorio:
    ```bash
@@ -48,23 +48,10 @@ Con OrgLens, puedes:
    cd orglens
    ```
 
-2. (Opcional) Crea un entorno virtual:
+2. Ejecución directa
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate
+   orglens-direct [argumentos]
    ```
-
-3. Instala las dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-### Ejecución directa
-
-Si no deseas instalar el proyecto, puedes ejecutarlo directamente:
-```bash
-python orglens.py [argumentos]
-```
 
 ---
 
@@ -76,7 +63,7 @@ El modo directo se utiliza para realizar búsquedas y exportaciones rápidas des
 
 #### Sintaxis
 ```bash
-orglens [opciones] -i archivos_de_entrada
+orglens-direct [opciones] -i archivos_de_entrada
 ```
 
 #### Opciones principales
@@ -91,7 +78,7 @@ orglens [opciones] -i archivos_de_entrada
 
 #### Ejemplo
 ```bash
-orglens -s "horno" -n "manteca" -f txt -o resultado.txt -i test/*.org
+orglens-direct -s "horno" -n "manteca" -f txt -o resultado.txt -i test/*.org
 ```
 
 ---
@@ -102,7 +89,7 @@ El modo interactivo permite realizar múltiples búsquedas sin reiniciar la herr
 
 #### Ejecución
 ```bash
-python orglens_interactive.py
+orglens-interactive
 ```
 
 #### Flujo interactivo
@@ -117,25 +104,25 @@ python orglens_interactive.py
 ### Búsqueda básica
 Buscar "horno" en todos los archivos `.org` del directorio `test/`:
 ```bash
-orglens -s "horno" -f txt -i test/*.org
+orglens-direct -s "horno" -f txt -i test/*.org
 ```
 
 ### Filtrado con exclusión
 Buscar "horno" pero excluir secciones que contengan "manteca":
 ```bash
-orglens -s "horno" -n "manteca" -f org -i test/example.org
+orglens-direct -s "horno" -n "manteca" -f org -i test/example.org
 ```
 
 ### Exportación a múltiples formatos
 Exportar resultados en diferentes formatos:
 ```bash
-orglens -s "horno" -o resultado.json resultado.txt resultado.org -i test/example.org
+orglens-direct -s "horno" -o resultado.json resultado.txt resultado.org -i test/example.org
 ```
 
 ### Procesar archivos comprimidos
 Procesar un archivo `.zip` que contiene archivos `.org`:
 ```bash
-orglens -s "tipografia" -f md -o resultado.md -i test.zip
+orglens-direct -s "tipografia" -f md -o resultado.md -i test.zip
 ```
 
 ---
@@ -144,7 +131,7 @@ orglens -s "tipografia" -f md -o resultado.md -i test.zip
 
 - **Soporte para archivos comprimidos**: Procesa archivos `.zip` y `.tar.gz` automáticamente.
 - **Búsquedas avanzadas**: Usa expresiones regulares para búsquedas más flexibles.
-- **Formatos de salida múltiples**: Exporta resultados en `JSON`, `TXT`, `ORG`, `Markdown` y `CSV`.
+- **Formatos de salida múltiples**: Exporta resultados en `JSON`, `TXT`, `ORG`, `Markdown`, `HTML` y `CSV`.
 - **Modo interactivo**: Ideal para realizar búsquedas repetidas sin reiniciar la herramienta.
 - **Optimización de rendimiento**: Procesa archivos grandes y múltiples archivos de manera eficiente.
 
@@ -162,13 +149,13 @@ OrgLens incluye soporte para autocompletado en la terminal Bash. Esto permite su
 Para habilitar el autocompletado, asegúrate de que el archivo `orglens-completion.bash` esté en tu sistema y ejecuta el siguiente comando:
 
 ```bash
-source /ruta/al/archivo/orglens-completion.bash
+source /ruta/al/archivo/completion.bash
 ```
 
 También puedes agregar esta línea a tu archivo `~/.bashrc` para que el autocompletado esté disponible automáticamente en todas tus sesiones:
 
 ```bash
-echo "source /ruta/al/archivo/orglens-completion.bash" >> ~/.bashrc
+echo "source /ruta/al/archivo/completion.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
 
@@ -203,6 +190,7 @@ OrgLens incluye un instalador en Bash que simplifica la configuración inicial. 
 
 #### Qué hace el instalador
 - Agrega el autocompletado al archivo `~/.bashrc`.
+- Aplica permisos de ejecución a `orglens-direct` y a `orglens-interactive`.
 - Crea enlaces simbólicos para los scripts principales:
   - `orglens-direct` → `~/.local/bin/orglens-direct`
   - `orglens-interactive` → `~/.local/bin/orglens-interactive`
@@ -240,6 +228,7 @@ OrgLens incluye un módulo para Emacs que permite interactuar con `orglens-direc
   - Términos a excluir (`no`) (opcional).
   - Formato de salida (`txt`, `json`, `org`, etc.).
   - Archivos/patrones de entrada (por ejemplo, `*.org test/*.org`).
+  - Archivos de salida (por ejemplo, `resultado.html`).
 
 Los resultados se mostrarán en un buffer llamado `*OrgLens Results*`.
 
@@ -247,7 +236,7 @@ Los resultados se mostrarán en un buffer llamado `*OrgLens Results*`.
 - Soporte para múltiples archivos o patrones de entrada.
 - Interpretación de rutas relativas al directorio actual.
 - Visualización de resultados en un buffer de solo lectura.
-
+- Soporte para indicar archivos de salida.
 
 
 ---

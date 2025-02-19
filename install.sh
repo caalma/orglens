@@ -3,7 +3,7 @@
 # Variables
 BIN_DIR="$HOME/.local/bin"
 BASHRC="$HOME/.bashrc"
-COMPLETION_SCRIPT="orglens-completion.bash"
+COMPLETION_SCRIPT="completion.bash"
 
 # Verificar si ~/.local/bin existe
 if [ ! -d "$BIN_DIR" ]; then
@@ -12,6 +12,7 @@ if [ ! -d "$BIN_DIR" ]; then
 fi
 
 # Dar permisos de ejecución
+echo "Aplicando permisos de ejecición..."
 chmod +x "./orglens-direct.py"
 chmod +x "./orglens-interactive.py"
 
@@ -24,7 +25,9 @@ ln -sf "$(pwd)/orglens-interactive.py" "$BIN_DIR/orglens-interactive"
 if ! grep -q "$COMPLETION_SCRIPT" "$BASHRC"; then
     echo "Configurando autocompletado en $BASHRC..."
     echo "# Autocompletado para OrgLens" >> "$BASHRC"
-    echo "source $(pwd)/$COMPLETION_SCRIPT" >> "$BASHRC"
+    echo 'if [[ -f "$(pwd)/$COMPLETION_SCRIPT" ]]; then'
+    echo 'source "$(pwd)/$COMPLETION_SCRIPT"' >> "$BASHRC"
+    echo 'fi'
 else
     echo "El autocompletado ya está configurado en $BASHRC."
 fi

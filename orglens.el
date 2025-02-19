@@ -9,7 +9,7 @@
 (defun orglens-run-direct (args)
   "Ejecuta orglens-direct con ARGS y muestra los resultados en un buffer."
   (let ((buffer-name "*OrgLens Results*")
-        (command (concat "orglens-direct " args)))
+        (command (concat "orglens-direct -r " args)))
     ;; Crear o reutilizar el buffer de resultados
     (with-current-buffer (get-buffer-create buffer-name)
       (erase-buffer)
@@ -28,9 +28,9 @@
          (args ""))
     ;; Construir los argumentos dinámicamente
     (when (and search-terms (not (string-blank-p search-terms)))
-      (setq args (concat args " -s " search-terms)))
+      (setq args (concat args " -s \"" search-terms "\"")))
     (when (and exclude-terms (not (string-blank-p exclude-terms)))
-      (setq args (concat args " -n " exclude-terms)))
+      (setq args (concat args " -n \"" exclude-terms "\"")))
     (when format
       (setq args (concat args " -f " format)))
     (when (and input-files (not (string-blank-p input-files)))
