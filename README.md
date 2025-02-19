@@ -149,13 +149,13 @@ OrgLens incluye soporte para autocompletado en la terminal Bash. Esto permite su
 Para habilitar el autocompletado, asegúrate de que el archivo `orglens-completion.bash` esté en tu sistema y ejecuta el siguiente comando:
 
 ```bash
-source /ruta/al/archivo/completion.bash
+source /ruta/al/archivo/orglens-completion.bash
 ```
 
 También puedes agregar esta línea a tu archivo `~/.bashrc` para que el autocompletado esté disponible automáticamente en todas tus sesiones:
 
 ```bash
-echo "source /ruta/al/archivo/completion.bash" >> ~/.bashrc
+echo "source /ruta/al/archivo/orglens-completion.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
 
